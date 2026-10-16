@@ -15,13 +15,65 @@ public class Settings extends javax.swing.JFrame {
     /**
      * Creates new form Settings
      */
-    public Settings() {
-        initComponents();
-        
-        setSize(1100, 700);
-setMinimumSize(new java.awt.Dimension(900, 600));
-setLocationRelativeTo(null);
+  
+public Settings() {
+    initComponents();
+
+    setTitle("Settings");
+    setSize(1100, 700);
+    setMinimumSize(new java.awt.Dimension(900, 600));
+    setLocationRelativeTo(null);
+
+    lblLogo.setText("");
+    lblLogo.setIcon(
+        createCircularIcon("/images/logo.jpg", 60)
+    );
+}
+
+private javax.swing.ImageIcon createCircularIcon(
+        String resourcePath, int size) {
+
+    try {
+        java.net.URL url = getClass().getResource(resourcePath);
+
+        if (url == null) {
+            System.out.println("Image not found: " + resourcePath);
+            return null;
+        }
+
+        java.awt.image.BufferedImage original =
+                javax.imageio.ImageIO.read(url);
+
+        java.awt.image.BufferedImage circle =
+                new java.awt.image.BufferedImage(
+                        size, size,
+                        java.awt.image.BufferedImage.TYPE_INT_ARGB
+                );
+
+        java.awt.Graphics2D g = circle.createGraphics();
+
+        g.setRenderingHint(
+                java.awt.RenderingHints.KEY_ANTIALIASING,
+                java.awt.RenderingHints.VALUE_ANTIALIAS_ON
+        );
+
+        g.setClip(new java.awt.geom.Ellipse2D.Double(
+                0, 0, size, size
+        ));
+
+        g.drawImage(original, 0, 0, size, size, null);
+        g.dispose();
+
+        return new javax.swing.ImageIcon(circle);
+
+    } catch (Exception e) {
+        System.out.println("Image error: " + e.getMessage());
+        return null;
     }
+}
+
+ 
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -38,6 +90,7 @@ setLocationRelativeTo(null);
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        lblLogo = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -62,6 +115,8 @@ setLocationRelativeTo(null);
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("USER PORTAL");
 
+        lblLogo.setText("jLabel4");
+
         javax.swing.GroupLayout pnlSidebarLayout = new javax.swing.GroupLayout(pnlSidebar);
         pnlSidebar.setLayout(pnlSidebarLayout);
         pnlSidebarLayout.setHorizontalGroup(
@@ -69,21 +124,28 @@ setLocationRelativeTo(null);
             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlSidebarLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40))
             .addGroup(pnlSidebarLayout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(41, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlSidebarLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlSidebarLayout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(52, 52, 52))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlSidebarLayout.createSequentialGroup()
+                        .addComponent(lblLogo)
+                        .addGap(94, 94, 94))))
         );
         pnlSidebarLayout.setVerticalGroup(
             pnlSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlSidebarLayout.createSequentialGroup()
-                .addGap(41, 41, 41)
+                .addGap(36, 36, 36)
+                .addComponent(lblLogo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
+                .addGap(26, 26, 26)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -208,6 +270,7 @@ this.dispose();
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblLogo;
     private javax.swing.JPanel pnlSidebar;
     // End of variables declaration//GEN-END:variables
 }
